@@ -19,6 +19,25 @@ Applied modifications:
 * ToDo: Installation of an additional 512GB SSD (NVMe)
 
 # Overview
-## [Installation instructions](InstallationInstructions.md)
+Advantages of using Docker for a Deep Learning Workstation are that you will only need to install the following on your host system. 
+* Linux OS
+* Docker CE
+* NVIDIA Driver
+Everything else will be installed in the Docker container. Using containers you can make usage of different versions of CUDA at the same time in different containers. Therefore I believe using containers is the best way in developing Deep Learning models.
 
+## [Installation instructions](InstallationInstructions.md)
+This sections provides information on:
+* Installing Ubuntu Server
+* Enabling remote access via SSH
+* Installing the NVIDIA driver and prior blacklisting of the Nouveau driver
+* Installing Docker CE
+
+## Docker for beginners
+tbd
+
+## Dockerized TensorFlow for beginners
+tbd
+
+## Screen for beginners
+tbd
 
