@@ -1,5 +1,5 @@
 ## OS installation
-Although I am used to Windows and newcomer in using Linux, I decided to go with Linux ([Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)) because I want to use Docker containers for development. Using Linux and Docker slowed my progress a lot at the beginning, but I believe that I will gain speed later and I this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I chose to go with Ubuntu Server.
+Although I am used to Windows and newcomer in using Linux, I decided to go with Linux ([Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)) because I want make use of Docker containers for Machine and Deep Learning model development. Using Linux and Docker slowed down my progress a lot at the beginning, but I believe that I will gain speed later and I this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I decided to go with Ubuntu Server.
 
 ### Installing Ubuntu Server 18.04 LTS
 Steps acomplished
@@ -29,7 +29,7 @@ Prepare Windows System (Laptop)
   * Now the login from Windows to the workstation is possible
 
 ### File transfer over SSH
-When downloading files on the Windows laptop they can be transferred using PSCP from the Windows command shell by typing the following command.
+When downloading files on the Windows system they can be transferred using PSCP from the Windows command shell by typing the following command.
 * `<linux user>` &rarr; user name on Linux server
 * `<linux pc-name>` &rarr; PC name of the Linux server
 * `<source filepath on windows>` &rarr; the source file path on the Windows system
@@ -66,7 +66,7 @@ In order to download the appropriate NVIDIA GPU driver from the [NVIDIA Driver D
 * OS
 * etc. ...
 
-I downloaded vesion 418 from to the Windows laptop and transferred the file to the Linux workstation using PSCP as described above.
+I downloaded version 418 on the Windows system and transferred the file to the Linux workstation using PSCP.
 ```bash
 > pscp NVIDIA-Linux-x86_64-418.56.run <linux user>@<linux pc-name>:/home/<linux user>
 ```
@@ -74,11 +74,14 @@ I downloaded vesion 418 from to the Windows laptop and transferred the file to t
 The installation was accomplished following the instructions from [NVIDIA Linux-x86_64 418.56](http://us.download.nvidia.com/XFree86/Linux-x86_64/418.56/README/index.html) section 4 [Installing the NVIDIA Driver](http://us.download.nvidia.com/XFree86/Linux-x86_64/418.56/README/installdriver.html).
 
 ## Installing Docker CE
-Follow the instruction on [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
+Follow the instruction from [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 
-I decided to install the debian package manually (v18.06.0 for bionic). I got an error message that and dependency was missing and had to install ```libltdl7``` previously.
+I decided to install the debian package manually (Docker v18.06.0 for bionic). I got an error message that a dependency was missing and had to install ```libltdl7``` previously.
+<br>
+Edit: Recently, I updated Docker to version 18.09.5.
 
-Additionally I added my user to the docker user group as decribed here: [Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/)
+Additionally I added my user to the docker user group as decribed here:<br>
+[Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/)
 
 After rebooting I was able to run the ```hello-world``` docker container.
 
@@ -90,4 +93,4 @@ $ systemctl enable docker
 ```
 
 ## Installing nvidia-docker2
-Follow the instruction on: [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker)
+Follow the instruction from [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker)
