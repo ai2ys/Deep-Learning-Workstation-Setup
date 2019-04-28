@@ -59,14 +59,7 @@ Regenerate the kernel initramfs:
 $ sudo update-initramfs -u
 ```
 
-
-
-Blacklisting nouveau: 
-
-/etc/modprobe.d/blacklist-nvidia-nouveau.conf
-
-https://linuxconfig.org/how-to-disable-nouveau-nvidia-driver-on-ubuntu-18-04-bionic-beaver-linux
-
+#### Download and installation
 In order to download the appropriate NVIDIA GPU driver from the [NVIDIA Driver Downloads](https://www.nvidia.com/Download/index.aspx?lang=en-us) site information about the GPU must be provided.
 * Product type (TITAN, GeForce, Quadro, ...)
 * Product series
