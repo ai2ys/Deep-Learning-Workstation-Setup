@@ -79,3 +79,22 @@ I downloaded vesion 418 from to the Windows laptop and transferred the file to t
 ```
 
 The installation was accomplished following the instructions from [NVIDIA Linux-x86_64 418.56](http://us.download.nvidia.com/XFree86/Linux-x86_64/418.56/README/index.html) section 4 [Installing the NVIDIA Driver](http://us.download.nvidia.com/XFree86/Linux-x86_64/418.56/README/installdriver.html).
+
+## Installing Docker CE
+Follow the instruction on [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
+
+I decided to install the debian package manually (v18.06.0 for bionic). I got an error message that and dependency was missing and had to install ```libltdl7``` previously.
+
+Additionally I added my user to the docker user group as decribed here: [Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/)
+
+After rebooting I was able to run the ```hello-world``` docker container.
+
+Ensure that docker will start on boot. 
+```bash
+$ services --status-all
+$ systemctl is-enabled docker
+$ systemctl enable docker
+```
+
+## Installing nvidia-docker2
+Follow the instruction on: [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker)
