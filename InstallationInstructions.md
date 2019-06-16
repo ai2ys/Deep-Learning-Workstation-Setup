@@ -10,6 +10,9 @@ Steps acomplished
   $ sudo apt-get update
   $ sudo apt-get upgrade
   ```
+### Static network configuration
+For accessing the workstation from a remote PC I am configuring the IP address to be static. I followed the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
+
 ### Remote access from Windows laptop
 I want to remotely access the workstation via SSH from my Windows system (ThinkPad Yoga 380 laptop with Windows 10 installed). 
 
