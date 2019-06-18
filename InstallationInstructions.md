@@ -97,3 +97,4 @@ $ systemctl enable docker
 
 ## Installing nvidia-docker2
 Follow the instruction from [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker)
+* [Instruction for Ubuntu](https://github.com/NVIDIA/nvidia-docker#ubuntu-140416041804-debian-jessiestretch)
