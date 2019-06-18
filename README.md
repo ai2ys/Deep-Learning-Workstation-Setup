@@ -32,8 +32,10 @@ This sections provides information on:
 * Installing the NVIDIA driver and prior blacklisting of the Nouveau driver
 * Installing Docker CE
 
-## Docker for beginners
-tbd
+## [Docker for beginners](DockerForBeginners.md)
+This section provides information on some of my commonly used docker commands, e.g.:
+* List running docker containers
+* [Retrieve the token of a running dockerized Jupyter notebook instance](DockerForBeginners.md#retrieving-the-token-of-a-running-dockerized-jupyter-notebook-instance)
 
 ## Dockerized TensorFlow for beginners
 tbd
