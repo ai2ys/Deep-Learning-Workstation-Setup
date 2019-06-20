@@ -25,17 +25,17 @@ Advantages of using Docker for a Deep Learning Workstation are that you will onl
 * NVIDIA Driver
 Everything else will be installed in the Docker container. Using containers you can make usage of different versions of CUDA at the same time in different containers. Therefore I believe using containers is the best way in developing Deep Learning models.
 
-## [Installation instructions](InstallationInstructions.md)
+## [Installation instructions](./InstallationInstructions.md)
 The (InstallationInstruction.md) file provides information on:
-* [Installing Ubuntu Server](Deep-Learning-Workstation-Setup.md#Installing-Ubuntu-Server-1804-LTS)
-* [Enabling remote access via SSH](InstallationInstructions.md#remote-access-from-windows-laptop)
-* [Installing the NVIDIA driver and prior blacklisting of the Nouveau driver](InstallationInstructions.md#installation-of-the-nvidia-gpu-driver)
+* [Installing Ubuntu Server](./Deep-Learning-Workstation-Setup.md#Installing-Ubuntu-Server-1804-LTS)
+* [Enabling remote access via SSH](./InstallationInstructions.md#remote-access-from-windows-laptop)
+* [Installing the NVIDIA driver and prior blacklisting of the Nouveau driver](./InstallationInstructions.md#installation-of-the-nvidia-gpu-driver)
 * [Installing Docker CE](InstallationInstructions.md#installing-docker-ce)
 
-## [Docker for beginners](DockerForBeginners.md)
+## [Docker for beginners](./DockerForBeginners.md)
 This (DockerForBeginners.md) files provides information on some of my commonly used docker commands, e.g.:
 * List running docker containers
-* [Retrieve the token of a running dockerized Jupyter notebook instance](DockerForBeginners.md#retrieving-the-token-of-a-running-dockerized-jupyter-notebook-instance)
+* [Retrieve the token of a running dockerized Jupyter notebook instance](./DockerForBeginners.md#retrieving-the-token-of-a-running-dockerized-jupyter-notebook-instance)
 
 ## Dockerized TensorFlow for beginners
 tbd
