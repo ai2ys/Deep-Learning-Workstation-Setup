@@ -1,7 +1,7 @@
 # Deep-Learning-Workstation-Setup
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
-I am sharing my experiences setting up my Deep Learning Workstation. Feel free to contribute.
+I am sharing my experiences setting up my Deep Learning Workstation. The main reason I am doing this documentation is to be able to redo all of the installation and configuring if needed. Since I am a beginner in this field I may not have used the best way for accomplishing my goal. Feel free to contribute.
 
 ## Why am I doing this?
 I am curious about where Machine Learning and Deep Learning and want to gather experience in applying it. Until now I completed some MOOCs which are listed in my [Class Central profile](https://www.classcentral.com/u/1246063).
