@@ -1,28 +1,28 @@
 ## OS installation
-Although I am used to Windows and newcomer in using Linux, I decided to go with Linux ([Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)) because I want make use of Docker containers for Machine and Deep Learning model development. Using Linux and Docker slowed down my progress a lot at the beginning, but I believe that I will gain speed later and I this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I decided to go with Ubuntu Server.
+Although I am used to Windows and a newcomer in using Linux, I decided to go with Linux ([Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)) because I want to make use of Docker containers for Machine Learning (ML) and Deep Learning (DL) model development. Using Linux and Docker slowed down my progress a lot at the beginning, but I believe that I will gain speed later. Furthermore I am sure this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I decided to go with Ubuntu Server.
 
 ### Installing Ubuntu Server 18.04 LTS
-Steps acomplished
-* Prepare a bootable USB stick with [Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)
-* Install Ubuntu Server with default values
-* Ensure the system is up to date
+Steps accomplished
+* Preparation of a bootable USB stick with [Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)
+* Installaltion of Ubuntu Server with default values
+* Updating the system is up to date
   ```bash
   $ sudo apt-get update
   $ sudo apt-get upgrade
   ```
-### Static network configuration
-For accessing the workstation from a remote PC I am configuring the IP address to be static. I followed the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
+### Static network configuration for remote access
+In order to access the workstation from a remote PC I configured the IP address to be static, following the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
 
 ### Remote access from Windows laptop
 I want to remotely access the workstation via SSH from my Windows system (ThinkPad Yoga 380 laptop with Windows 10 installed). 
 
-Prepare Ubuntu Server (Workstation)
-* Check if SSH service is active and start if if needed
+Steps accomplished on the Ubuntu Server Workstation
+* Check if the SSH service is active and start the service if needed
   ```bash
   $ service sshd status
   $ service sshd start
   ```
-Prepare Windows System (Laptop)
+Steps accomplished on the Windows System (Laptop)
 * Install [Putty](https://www.putty.org/)
 * Start Putty Desktop App and save a session
   * Enter session name for "Saved Sessions"
@@ -32,18 +32,20 @@ Prepare Windows System (Laptop)
   * Now the login from Windows to the workstation is possible
 
 ### File transfer over SSH
-When downloading files on the Windows system they can be transferred using PSCP from the Windows command shell by typing the following command.
+When downloading files on the Windows system they can be transferred from the Windows system to the Linux system. Use PSCP from the Windows command shell by typing the following command.
 * `<linux user>` &rarr; user name on Linux server
 * `<linux pc-name>` &rarr; PC name of the Linux server
+* `<destination directory>` &rarr; the destination directory on the Linux system
 * `<source filepath on windows>` &rarr; the source file path on the Windows system
 ```bash
-> pscp <source filepath on windows> <linux user>@<linux pc-name>:/home/<linux user>
+> pscp <source filepath on windows> <linux user>@<linux pc-name>:/home/<linux user>/<destination directory>/
 ```
 
 ### Installation of the NVIDIA GPU driver
 Before installing the NVIDIA driver the Nouveau driver must be first disabled. 
 
-#### [Disabling Nouveau](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-nouveau-ubuntu)
+#### Disabling Nouveau
+[Instructions used for disabling the Nouveau driver.](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-nouveau-ubuntu)
 For Ubunutu create a file at `/etc/modprobe.d/blacklist-nouveau.conf`:
 ```bash
 $ nano /etc/modprobe.d/blacklist-nouveau.conf
@@ -86,7 +88,7 @@ Edit: Recently, I updated Docker to version 18.09.5.
 Additionally I added my user to the docker user group as decribed here:<br>
 [Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/)
 
-After rebooting I was able to run the ```hello-world``` docker container.
+After rebooting try to run the ```hello-world``` docker container. If it runs everything is working.
 
 Ensure that docker will start on boot. 
 ```bash
