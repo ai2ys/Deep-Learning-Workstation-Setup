@@ -27,15 +27,15 @@ Everything else will be installed in the Docker container. Using containers you 
 
 ## [Installation instructions](InstallationInstructions.md)
 This sections provides information on:
-* Installing Ubuntu Server
+* [Installing Ubuntu Server] (Deep-Learning-Workstation-Setup.md#Installing-Ubuntu-Server-18.04-LTS)
 * Enabling remote access via SSH
 * Installing the NVIDIA driver and prior blacklisting of the Nouveau driver
 * Installing Docker CE
 
-## [Docker for beginners](DockerForBeginners.md)
+## [Docker for beginners](Docker-for-Beginners.md)
 This section provides information on some of my commonly used docker commands, e.g.:
 * List running docker containers
-* [Retrieve the token of a running dockerized Jupyter notebook instance](DockerForBeginners.md#retrieving-the-token-of-a-running-dockerized-jupyter-notebook-instance)
+* [Retrieve the token of a running dockerized Jupyter notebook instance](Docker-for-Beginners.md#retrieving-the-token-of-a-running-dockerized-jupyter-notebook-instance)
 
 ## Dockerized TensorFlow for beginners
 tbd
