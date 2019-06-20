@@ -1,7 +1,7 @@
 # Deep-Learning-Workstation-Setup
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
-I am sharing my experiences setting up my Deep Learning Workstation. The main reason I am doing this documentation is to be able to redo all of the installation and configuring if needed. Since I am a beginner in this field I may not have used the best way for accomplishing my goal. Feel free to contribute.
+I am sharing my experiences setting up my Deep Learning Workstation. The main reason I am doing this documentation is to be able to redo all of the installation and configuring if needed. Furthermore, I hope this documentation helps other who are getting started with this topic. Since I am a beginner in this field I might not have used the best way for accomplishing my goal. Feel free to contribute.
 
 ## Why am I doing this?
 I am curious about where Machine Learning and Deep Learning and want to gather experience in applying it. Until now I completed some MOOCs which are listed in my [Class Central profile](https://www.classcentral.com/u/1246063).
@@ -23,7 +23,11 @@ Advantages of using Docker for a Deep Learning Workstation are that you will onl
 * Linux OS
 * Docker CE
 * NVIDIA Driver
-Everything else will be installed in the Docker container. Using containers you can make usage of different versions of CUDA at the same time in different containers. Therefore I believe using containers is the best way in developing Deep Learning models.
+
+Everything else will be installed in the Docker container. Using containers you can make usage of different versions of CUDA at the same time in different containers. Therefore I believe using them is the best way in developing Deep Learning models.
+
+![Image from nvida-docker](https://cloud.githubusercontent.com/assets/3028125/12213714/5b208976-b632-11e5-8406-38d379ec46aa.png)<br>
+(source: https://github.com/NVIDIA/nvidia-docker)
 
 ## [Installation instructions](./InstallationInstructions.md)
 The (InstallationInstruction.md) file provides information on:
