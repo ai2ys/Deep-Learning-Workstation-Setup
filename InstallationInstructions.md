@@ -64,7 +64,48 @@ Regenerate the kernel initramfs:
 $ sudo update-initramfs -u
 ```
 
-#### Download and installation
+#### Installation using the ppa repository
+Steps accomplished for installing the driver version 430.
+```bash
+$ sudo add-apt-repository ppa:graphics-drivers
+$ sudo apt-get update
+$ sudo apt-get install nvidia-driver-430 
+$ sudo reboot
+```
+After the reboot call
+```bash
+$ nvidia-smi
+```
+I got the following output
+```bash
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 430.26       Driver Version: 430.26       CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Quadro P4000        Off  | 00000000:65:00.0 Off |                  N/A |
+| 46%   30C    P8     5W / 105W |     18MiB /  8119MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0      2123      G   /usr/lib/xorg/Xorg                             9MiB |
+|    0      2231      G   /usr/bin/gnome-shell                           5MiB |
++-----------------------------------------------------------------------------+
+```
+
+#### Download and installation using the script from the NVIDA Website
+---
+***I faced some trouble with when following the installation instruciton below. From time to time the driver was not working anymore. Threrefore I uninstalled the driver using the below mentioned script.***
+
+```bash
+$ sudo bash ./NVIDIA-Linux-x86_64-418.56.run --uninstall
+```
+---
+
 In order to download the appropriate NVIDIA GPU driver from the [NVIDIA Driver Downloads](https://www.nvidia.com/Download/index.aspx?lang=en-us) site information about the GPU must be provided.
 * Product type (TITAN, GeForce, Quadro, ...)
 * Product series
@@ -100,3 +141,41 @@ $ systemctl enable docker
 ## Installing nvidia-docker2
 Follow the instruction from [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker)
 * [Instruction for Ubuntu](https://github.com/NVIDIA/nvidia-docker#ubuntu-140416041804-debian-jessiestretch)
+In my case I had only to run the following commands, because I had not installed nvidia-docker 1.0 previously.<br>
+```bash
+$ sudo apt-get purge -y nvidia-docker
+
+# Add the package repositories
+$ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \
+  sudo apt-key add -
+$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+$ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+  sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+$ sudo apt-get update
+
+# Install nvidia-docker2 and reload the Docker daemon configuration
+$ sudo apt-get install -y nvidia-docker2
+$ sudo pkill -SIGHUP dockerd
+
+# Test nvidia-smi with the latest official CUDA image
+$ docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
+```
+After that I got the following output
+
+```bash
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 430.26       Driver Version: 430.26       CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Quadro P4000        Off  | 00000000:65:00.0 Off |                  N/A |
+| 46%   30C    P8     4W / 105W |     18MiB /  8119MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
++-----------------------------------------------------------------------------+
+```
