@@ -12,7 +12,12 @@ I got a good deal on a used [Lenovo ThinkStation P520 (30BE006X**)](https://psre
   * 900W Platinum Power Supply
   * 1x 32GB RDIMM DDR4-2666 ECC
   * 256GB SSD + 1 TB HDD, both SATA
-  * 1x NVIDIA Quadro P4000 8GB (CUDA compute capability 6.1)
+  * 1x NVIDIA Quadro P4000
+    ([Data sheet](https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/productspage/quadro/quadro-desktop/quadro-pascal-p4000-data-sheet-us-nvidia-704358-r2-web.pdf))
+    * 1792 CUDA cores 
+    * 8 GB GDDR5 GPU Memory
+    * CUDA compute capability 6.1    
+    * 5.3 TFLOPS FP32 performance
 
 Applied modifications:
 * The preinstalled 1TB HDD was replaced by a 1TB SSD (SATA).
