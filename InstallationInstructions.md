@@ -65,11 +65,19 @@ $ sudo update-initramfs -u
 ```
 
 #### Installation using the ppa repository
+Deinstall the existing version.
+```bash
+$ dpkg -l | grep ndida
+$ sudo apt-get purge *nvidia*
+$ sudo autoremove
+$ sudo autoclean
+```
+
 Steps accomplished for installing the driver version 430.
 ```bash
 $ sudo add-apt-repository ppa:graphics-drivers
 $ sudo apt-get update
-$ sudo apt-get install nvidia-driver-430 
+$ sudo apt-get install nvidia-driver-430
 $ sudo reboot
 ```
 After the reboot call
@@ -133,10 +141,54 @@ After rebooting try to run the ```hello-world``` docker container. If it runs ev
 
 Ensure that docker will start on boot. 
 ```bash
-$ services --status-all
+$ service --status-all
 $ systemctl is-enabled docker
 $ systemctl enable docker
 ```
+
+---
+## Installing the NVIDIA Container Toolkit
+The previous nvidia-docker2 is now deprecated. Therefore I have to deinstall the previous isntalled verion.
+```bash
+$ sudo apt-get purge -y nvidia-docker
+```
+Afterwards follow the instruction from [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker).
+
+```bash
+# Add the package repositories
+$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+$ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+$ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+$ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+$ sudo systemctl restart docker
+``` 
+The following command did run successfully.
+```bash
+#### Test nvidia-smi with the latest official CUDA image
+$ docker run --gpus all nvidia/cuda:latest nvidia-smi
+```
+It did work and I got the following output.
+```bash
+Sun Sep  8 20:45:05 2019       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 435.21       Driver Version: 435.21       CUDA Version: 10.1     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  TITAN RTX           Off  | 00000000:65:00.0  On |                  N/A |
+| 41%   34C    P8     5W / 280W |   1203MiB / 24219MiB |      6%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
++-----------------------------------------------------------------------------+
+
+```
+---
 
 ## Installing nvidia-docker2
 Follow the instruction from [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker)

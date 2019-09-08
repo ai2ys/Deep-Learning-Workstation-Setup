@@ -19,6 +19,9 @@ I got a good deal on a used [Lenovo ThinkStation P520 (30BE006X**)](https://psre
     * CUDA compute capability 6.1    
     * 5.3 TFLOPS FP32 performance
 
+2019-09-08: *Graphics card upgrade*
+<br>The NVIDIA Quadro P4000 has been replaced by a NVIDIA TITAN RTX.
+
 Applied modifications:
 * The preinstalled 1TB HDD was replaced by a 1TB SSD (SATA).
 * ToDo: Installation of an additional 512GB SSD (NVMe)
