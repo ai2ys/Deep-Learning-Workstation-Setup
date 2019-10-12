@@ -3,7 +3,7 @@ I am new to docker and I am tired of repeatedly searching the internet for docke
 
 Link to the Docker CLI: https://docs.docker.com/engine/reference/commandline/docker/
 
-## Retrieve the IDs and names containers
+## Retrieve the IDs and names of containers
 Use the command `docker ps` to list running containers. When additionally using the option `--all` also the not running container will be displayed.
 ```bash
 $ docker ps
@@ -12,18 +12,18 @@ e0f33c4fd9b4        ai2ys/tensorflow:2.0.0a0-gpu-py3-jupyter   "bash -c 'source 
 ```
 An alternate way is to use the command `docker container ls`.
 
-## Attach terminal to running container
+## Attach terminal to a running container
 ```bash
 $ docker attach <container name or ID>
 ```
 
-## Start bash shell inside a runnning container
+## Start a bash shell inside of a runnning container
 ```bash
 $ docker exec -it <container name or ID> bash
 ```
 
 ## Docker and Jupyter notebooks
-### Retrieving the token of a running dockerized Jupyter notebook instance
+### Retrieve the token of a running dockerized Jupyter notebook
 * list all running docker containers
   ```bash
   $ docker container ls
