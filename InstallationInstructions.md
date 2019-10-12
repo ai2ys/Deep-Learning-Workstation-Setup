@@ -74,8 +74,8 @@ Deinstall the existing version.
 ```bash
 $ dpkg -l | grep ndida
 $ sudo apt-get purge *nvidia*
-$ sudo autoremove
-$ sudo autoclean
+$ sudo apt-get autoremove
+$ sudo apt-get autoclean
 ```
 
 Steps accomplished for installing the driver version 435.
