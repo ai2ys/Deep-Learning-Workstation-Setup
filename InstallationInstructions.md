@@ -1,12 +1,12 @@
 # OS installation
 
-Although I am used to Windows and a newcomer in using Linux, I decided to go with Linux ([Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)) because I want to make use of Docker containers for Machine Learning (ML) and Deep Learning (DL) model development. Using Linux and Docker slowed down my progress a lot at the beginning, but I believe that I will gain speed later. Furthermore I am sure this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I decided to go with Ubuntu Server.
+Although I am used to Windows and a newcomer in using Linux, I decided to go with Linux ([Ubuntu 20.04 LTS](http://releases.ubuntu.com/20.04/)) because I want to make use of Docker containers for Machine Learning (ML) and Deep Learning (DL) model development. Using Linux and Docker slowed down my progress a lot at the beginning, but I believe that I will gain speed later. Furthermore I am sure this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I decided to go with Ubuntu Server.
 
 ---
-## Installing Ubuntu Server 18.04 LTS
+## Installing Ubuntu 20.04 LTS
 Steps accomplished
-* Preparation of a bootable USB stick with [Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)
-* Installaltion of Ubuntu Server with default values
+* Preparation of a bootable USB stick with [Ubuntu Server 20.04 LTS](http://releases.ubuntu.com/20.04/)
+* Installaltion of Ubuntu Desktop (minimal)
 * Updating the system is up to date
   ```bash
   $ sudo apt-get update
@@ -14,17 +14,27 @@ Steps accomplished
   ```
 ---
 ## Static network configuration for remote access
-In order to access the workstation from a remote PC I configured the IP address to be static, following the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
+In order to access the workstation from a remote PC I configured the IP address to be static.
+<!--
+, following the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
+-->
 ---
 ## Remote access from Windows laptop
-I want to remotely access the workstation via SSH from my Windows system (ThinkPad Yoga 380 laptop with Windows 10 installed). 
+I want to remotely access the workstation via SSH from my Windows system (ThinkPad Yoga 380 laptop with Windows 10 installed). I will use VS Code in order to connect via SSH to the remote system as well as connecting it "attaching VS Code" to Docker containers running on the remote system.
 
 Steps accomplished on the Ubuntu Server Workstation
+* Install ssh service 
+  ```bash
+  sudo apt-get update
+  sudo apt-get install openssh-server
+  ```
 * Check if the SSH service is active and start the service if needed
   ```bash
   $ service sshd status
   $ service sshd start
   ```
+  
+<!--
 Steps accomplished on the Windows System (Laptop)
 * Install [Putty](https://www.putty.org/)
 * Start Putty Desktop App and save a session
@@ -33,7 +43,39 @@ Steps accomplished on the Windows System (Laptop)
   * "Save" the session
 * "Load" the required session and "Open" it
   * Now the login from Windows to the workstation is possible
+-->
 
+Using SSH for login
+* Create a SSH key on the local system, in case of Windows use GitBash for the following steps
+```bash
+ssh-keygen -b4096 -t rsa -C "some comment"
+```
+* Append the public key (`*.pub`) to the file `~/.ssh/authorized_keys` on the remote system
+  - Create the file in case it does not exist
+  ```bash
+  touch .ssh/authorized_keys
+  ```
+  - Copy the public key `*.pub` and append it to the `authorized_keys`
+  ```bash
+  # append the key (here id_rsa.pub) to the authorized keys
+  cat id_rsa.pub >> ~./ssh/authorized_keys
+  ```
+  
+Configure a SSH configuration
+* Linux: `.ssh/config`
+* Windows: 
+  - Standard: `C:\Users?<username>\.ssh\config` 
+  - WSL2: `/mnt/c/Users/<username>/.ssh/config
+
+```
+# Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+Host alias
+    HostName <ip address>
+    User username
+    PreferredAuthentications publickey
+    # sample for windows
+    IdentityFile C:/Users/<username>/.ssh/id_rsa
+```
 ---
 ## File transfer over SSH
 When downloading files on the Windows system they can be transferred from the Windows system to the Linux system. Use PSCP from the Windows command shell by typing the following command.
