@@ -72,7 +72,7 @@ $ sudo update-initramfs -u
 ### Installation using the ppa repository
 Deinstall the existing version.
 ```bash
-$ dpkg -l | grep ndida
+$ dpkg -l | grep nvidia
 $ sudo apt-get purge *nvidia*
 $ sudo apt-get autoremove
 $ sudo apt-get autoclean
@@ -82,8 +82,8 @@ Steps accomplished for installing the driver version 435.
 ```bash
 $ sudo add-apt-repository ppa:graphics-drivers
 $ sudo apt-get update
-# sudo apt-get install nvidia-driver-<version>, example for version 435.
-$ sudo apt-get install nvidia-driver-435
+# sudo apt-get install nvidia-driver-<version>, example for version 440.
+$ sudo apt-get install nvidia-driver-440
 $ sudo reboot
 ```
 After the reboot call
@@ -92,27 +92,27 @@ $ nvidia-smi
 ```
 I got the following output
 ```bash
-Sun Sep  8 22:47:54 2019       
+Mon Apr  6 11:17:42 2020       
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 435.21       Driver Version: 435.21       CUDA Version: 10.1     |
+| NVIDIA-SMI 440.64       Driver Version: 440.64       CUDA Version: 10.2     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
 |===============================+======================+======================|
 |   0  TITAN RTX           Off  | 00000000:65:00.0  On |                  N/A |
-| 41%   34C    P8     5W / 280W |   1185MiB / 24219MiB |      2%      Default |
+| 41%   35C    P8    24W / 280W |   1332MiB / 24219MiB |      7%      Default |
 +-------------------------------+----------------------+----------------------+
                                                                                
 +-----------------------------------------------------------------------------+
 | Processes:                                                       GPU Memory |
 |  GPU       PID   Type   Process name                             Usage      |
 |=============================================================================|
-|    0      2048      G   /usr/lib/xorg/Xorg                            40MiB |
-|    0      2248      G   /usr/bin/gnome-shell                          51MiB |
-|    0      2689      G   /usr/lib/xorg/Xorg                           448MiB |
-|    0      2842      G   /usr/bin/gnome-shell                          93MiB |
-|    0      3423      G   ...uest-channel-token=13807832972120768915   461MiB |
-|    0      3892      G   ...quest-channel-token=8347145569574175397    87MiB |
+|    0      2166      G   /usr/lib/xorg/Xorg                            57MiB |
+|    0      2420      G   /usr/bin/gnome-shell                         134MiB |
+|    0      3063      G   /usr/lib/xorg/Xorg                           631MiB |
+|    0      3217      G   /usr/bin/gnome-shell                         217MiB |
+|    0      3781      G   ...AAAAAAAAAAAAAAgAAAAAAAAA --shared-files    60MiB |
+|    0      6087      G   ...quest-channel-token=5527385337362823581   206MiB |
 +-----------------------------------------------------------------------------+
 ```
 
@@ -160,15 +160,15 @@ $ docker run --gpus all nvidia/cuda:latest nvidia-smi
 ```
 It did work and I got the following output.
 ```bash
-Sun Sep  8 20:45:05 2019       
+Mon Apr  6 09:13:52 2020       
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 435.21       Driver Version: 435.21       CUDA Version: 10.1     |
+| NVIDIA-SMI 440.64       Driver Version: 440.64       CUDA Version: 10.2     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
 |===============================+======================+======================|
 |   0  TITAN RTX           Off  | 00000000:65:00.0  On |                  N/A |
-| 41%   34C    P8     5W / 280W |   1203MiB / 24219MiB |      6%      Default |
+| 41%   33C    P8    23W / 280W |    709MiB / 24219MiB |     13%      Default |
 +-------------------------------+----------------------+----------------------+
                                                                                
 +-----------------------------------------------------------------------------+
@@ -176,5 +176,4 @@ Sun Sep  8 20:45:05 2019
 |  GPU       PID   Type   Process name                             Usage      |
 |=============================================================================|
 +-----------------------------------------------------------------------------+
-
 ```
