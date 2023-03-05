@@ -235,7 +235,7 @@ systemctl enable docker
 
 ---
 
-## Installing the NVIDIA Container Toolkit
+### Installing the NVIDIA Container Toolkit
 
 The previous nvidia-docker2 is now deprecated. Therefore I have to uninstall the previous installed version.
 
@@ -282,7 +282,17 @@ GPU 0: NVIDIA TITAN RTX (UUID: GPU-<UUID removed here>)
 
 ---
 
-## Installing the `docker compose` plugin
+### Running Docker rootless mode
+
+After the installation of Docker the service will run as system-wide service. All users on the system will be able to access all images/containers available/running on the system. This can be an issue when sharing a workstation with multiple users.
+
+It is possible to install Docker as a service per user. Each user will only see its own images and containers.
+
+ℹ️ I changed my setup to Docker rootless mode. For information on how this as accomplished see [DockerRootless.md](DockerRootless.md).
+
+---
+
+### Installing the `docker compose` plugin
 Using `docker-compose.yml` files for building the Docker images and running the containers makes life much easier. It is mainly used for multi-container applications, but I find it also very useful for running single containers, see [Docker Compose overview](https://docs.docker.com/compose/).
 
 For using the `docker-compose.yml` files you have to install the `docker compose` plugin. Follow the instructions from [Installation of the Compose plugin](https://docs.docker.com/compose/install/linux/) for Ubuntu as shown below.
