@@ -1,0 +1,35 @@
+ARG NVCR_TAG
+FROM nvcr.io/nvidia/tensorflow:${NVCR_TAG}
+LABEL maintainer="https://github.com/ai2ys"
+
+# Setting bash as default shell
+ENV SHELL=/bin/bash
+ARG DEBIAN_FRONTEND=noninteractive
+
+WORKDIR /
+# add path because of pip warning
+ARG ROOT_LOCAL_DIR=/root/.local
+RUN mkdir -p ${ROOT_LOCAL_DIR} && chmod a+rwx ${ROOT_LOCAL_DIR}
+ENV PATH=${PATH}:${ROOT_LOCAL_DIR}/bin/
+
+# Install packages
+RUN apt-get update && apt-get install -y \
+    apt-utils \
+    htop \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN python3 -m pip install --upgrade --no-cache-dir pip~=23.0
+RUN pip3 install --no-cache-dir jupyterlab~=3.6.1
+
+# create symbolic link for python 3.x
+RUN rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+
+# Install requirements
+COPY requirements.txt /tmp/
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt
+
+ARG WORKSPACE_DIR
+WORKDIR ${WORKSPACE_DIR}
+
+CMD ["bash"]

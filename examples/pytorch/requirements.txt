@@ -1,0 +1,4 @@
+# add python libraries here
+# <libary name>~=<version specified by major.minor.patch assuming semantic versioning>
+
+nvitop~=1.0.0

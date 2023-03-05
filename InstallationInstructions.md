@@ -1,30 +1,51 @@
 # OS installation
 
-Although I am used to Windows and a newcomer in using Linux, I decided to go with Linux ([Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)) because I want to make use of Docker containers for Machine Learning (ML) and Deep Learning (DL) model development. Using Linux and Docker slowed down my progress a lot at the beginning, but I believe that I will gain speed later. Furthermore I am sure this setup will reduce the propability of me damaging the OS. At work I have been using Ubuntu Desktop for a while. As a result of this I decided to go with Ubuntu Server.
+The system is setup using Linux ([Ubuntu 20.04 LTS](http://releases.ubuntu.com/20.04/)) as this works best using (🐋 Docker) containers for Machine Learning (ML)/Deep Learning (DL) model development with NVIDIA GPUs.
 
 ---
-## Installing Ubuntu Server 18.04 LTS
+
+## Installing Ubuntu 20.04 LTS
+
 Steps accomplished
-* Preparation of a bootable USB stick with [Ubuntu Server 18.04 LTS](http://releases.ubuntu.com/18.04/)
-* Installaltion of Ubuntu Server with default values
-* Updating the system is up to date
-  ```bash
-  $ sudo apt-get update
-  $ sudo apt-get upgrade
-  ```
+
+- Preparation of a bootable USB stick with [Ubuntu Server 20.04 LTS](http://releases.ubuntu.com/20.04/)
+- Installaltion of Ubuntu Desktop (minimal)
+- Updating the system is up to date
+    ```markdown
+    sudo apt-get update
+    sudo apt-get upgrade
+    ```
+
 ---
 ## Static network configuration for remote access
-In order to access the workstation from a remote PC I configured the IP address to be static, following the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
+
+In order to access the workstation from a remote PC I configured the IP address to be static.
+<!--
+, following the instruction from [How to Configure Network Static IP Address in Ubuntu 18.04](https://www.tecmint.com/configure-network-static-ip-address-in-ubuntu/)
+-->
+
 ---
 ## Remote access from Windows laptop
-I want to remotely access the workstation via SSH from my Windows system (ThinkPad Yoga 380 laptop with Windows 10 installed). 
+
+I want to remotely access the workstation via SSH from my Windows system (ThinkPad Yoga 380 laptop with Windows 10 installed). I will use VS Code in order to connect via SSH to the remote system as well as connecting it "attaching VS Code" to Docker containers running on the remote system.
 
 Steps accomplished on the Ubuntu Server Workstation
-* Check if the SSH service is active and start the service if needed
+
+- Install ssh service
+
   ```bash
-  $ service sshd status
-  $ service sshd start
+  sudo apt-get update
+  sudo apt-get install openssh-server
   ```
+
+- Check if the SSH service is active and start the service if needed
+
+  ```bash
+  service sshd status
+  service sshd start
+  ```
+  
+<!--
 Steps accomplished on the Windows System (Laptop)
 * Install [Putty](https://www.putty.org/)
 * Start Putty Desktop App and save a session
@@ -33,147 +54,249 @@ Steps accomplished on the Windows System (Laptop)
   * "Save" the session
 * "Load" the required session and "Open" it
   * Now the login from Windows to the workstation is possible
+-->
+
+Using SSH for login
+
+- Create a SSH key on the local system, in case of Windows use GitBash for the following steps
+      ```bash
+      ssh-keygen -b4096 -t rsa -C "some comment"
+      ```
+- Append the public key (`*.pub`) to the file `~/.ssh/authorized_keys` on the remote system
+  - Create the file in case it does not exist  
+    ```bash
+    touch .ssh/authorized_keys
+    ```
+  - Copy the public key `*.pub` and append it to the `authorized_keys`  
+    ```bash
+    # append the key (here id_rsa.pub) to the authorized keys
+    cat id_rsa.pub >> ~./ssh/authorized_keys
+    ```
+  
+Configure a SSH configuration file
+
+```bash
+# Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+Host <name_alias>
+    HostName <ip address>
+    User username
+    PreferredAuthentications publickey
+    # sample for Linux
+    IdentityFile ~/.ssh/id_rsa
+```
+
+- Linux: `.ssh/config`
+- Windows:
+  - Standard: `C:\Users\<username>\.ssh\config`
+  - WSL2: `/mnt/c/Users/<username>/.ssh/config`
 
 ---
-## File transfer over SSH
-When downloading files on the Windows system they can be transferred from the Windows system to the Linux system. Use PSCP from the Windows command shell by typing the following command.
-* `<linux user>` &rarr; user name on Linux server
-* `<linux pc-name>` &rarr; PC name of the Linux server
-* `<destination directory>` &rarr; the destination directory on the Linux system
-* `<source filepath on windows>` &rarr; the source file path on the Windows system
+
+## File transfer via SSH (Windows ➡️ Linux)
+
+When downloading files on the Windows system they can be transferred from the Windows system to the Linux system via command line using `pscp`.
+
 ```bash
-> pscp <source filepath on windows> <linux user>@<linux pc-name>:/home/<linux user>/<destination directory>/
+pscp <src filepath on windows> <linux user>@<linux pc-name>:/home/<linux user>/<destination directory>/
 ```
+
+- `<linux user>` &rarr; user name on Linux server
+- `<linux pc-name>` &rarr; PC name of the Linux server
+- `<destination directory>` &rarr; the destination directory on the Linux system
+- `<source filepath on windows>` &rarr; the source file path on the Windows system
+
+ℹ️ Alternatively files and folder can be transferred "drag & drop" in VSCode form your host (MacOS, Linux, Windows) to the Linux server to the current opened folder on the Linux server.
+
 ---
+
 ## Installation of the NVIDIA GPU driver
-__Remark:__ *At first I installed the NVIDIA driver from the NVIDIA website. But from time to time I faced some troubles because the driver was not working anymore. Threrefore I am now using the driver from the PPA repositiory. Until now it  is working.*
 
 ### Disabling Nouveau
 Before installing the NVIDIA driver the Nouveau driver must be first disabled. [Instructions used for disabling the Nouveau driver.](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-nouveau-ubuntu)
 
-For Ubunutu create a file at `/etc/modprobe.d/blacklist-nouveau.conf`:
-```bash
-$ nano /etc/modprobe.d/blacklist-nouveau.conf
-```
-Add the following content and save the file.
-```bash
-blacklist nouveau
-options nouveau modeset=0
-```
-Check the file content using `cat`:
-```bash
-$ cat /etc/modprobe.d/blacklist-nouveau.conf
-```
-Regenerate the kernel initramfs:
-```bash
-$ sudo update-initramfs -u
-```
+- For Ubunutu create a file at `/etc/modprobe.d/blacklist-nouveau.conf`:
+
+    ```bash
+    nano /etc/modprobe.d/blacklist-nouveau.conf
+    ```
+
+    - Add the following content and save the file.
+    
+        ```bash
+        blacklist nouveau
+        options nouveau modeset=0
+        ```
+
+- Check the file content using `cat`:
+
+    ```bash
+    $ cat /etc/modprobe.d/blacklist-nouveau.conf
+    blacklist nouveau
+    options nouveau modeset=0
+    ```
+
+- Regenerate the kernel initramfs:
+
+    ```bash
+    sudo update-initramfs -u
+    ```
+
 
 ### Installation using the ppa repository
-Deinstall the existing version.
-```bash
-$ dpkg -l | grep nvidia
-$ sudo apt-get purge *nvidia*
-$ sudo apt-get autoremove
-$ sudo apt-get autoclean
-```
 
-Steps accomplished for installing the driver version 435.
-```bash
-$ sudo add-apt-repository ppa:graphics-drivers
-$ sudo apt-get update
-# sudo apt-get install nvidia-driver-<version>, example for version 440.
-$ sudo apt-get install nvidia-driver-440
-$ sudo reboot
-```
-After the reboot call
-```bash
+Deinstallation of previously installed version.
+
+- Retrieve installed NVIDIA driver version using
+
+    ```shell
+    dpkg -l | grep nvidia
+    ```
+    or
+    ```shell
+    whereis nvidia
+    ```
+
+- Deinstall/remove all version related packages, replace the retrieved version below, e.g. 470
+
+    ```shell
+    current_version=470
+    sudo apt-get purge *nvidia*${current_version}
+    sudo apt-get autoremove
+    sudo apt-get clean
+    ```
+
+Steps accomplished for installing the new driver version
+
+- Add `ppa` repository, if not already done previously
+  - Check if already added previously
+
+    ```shell
+    grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/* | grep graphics-drivers
+    ```
+
+  - If `ppa` repository is not present ad it and update
+
+    ``` shell
+    sudo add-apt-repository ppa:graphics-drivers
+    sudo apt-get update
+    ```
+
+- Check which major driver version is compatible with your NVIDIA GPU. [Retrieve compatible version](https://www.nvidia.de/Download/index.aspx), e.g. version "525.89.02" for NVIDIA RTX TITAN 2023-03-04
+  
+- Install new driver version, e.g. 525
+  - Check for availability, install and reboot afterwards
+
+    ```shell
+    new_version=525
+    apt-cache search nvidia-driver | grep ${new_version}
+    sudo apt-get install nvidia-driver-${new_version}
+    sudo reboot now
+    ```
+
+After the system has been rebooted you should get a similar output as below when running `nvidia-smi` from the command line.
+
+``` shell
 $ nvidia-smi
-```
-I got the following output
-```bash
-Mon Apr  6 11:17:42 2020       
+Sat Mar  4 12:56:05 2023
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 440.64       Driver Version: 440.64       CUDA Version: 10.2     |
+| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
 |===============================+======================+======================|
-|   0  TITAN RTX           Off  | 00000000:65:00.0  On |                  N/A |
-| 41%   35C    P8    24W / 280W |   1332MiB / 24219MiB |      7%      Default |
+|   0  NVIDIA TITAN RTX    On   | 00000000:65:00.0  On |                  N/A |
+| 41%   40C    P0    56W / 280W |   1416MiB / 24576MiB |      3%      Default |
+|                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
-                                                                               
-+-----------------------------------------------------------------------------+
-| Processes:                                                       GPU Memory |
-|  GPU       PID   Type   Process name                             Usage      |
-|=============================================================================|
-|    0      2166      G   /usr/lib/xorg/Xorg                            57MiB |
-|    0      2420      G   /usr/bin/gnome-shell                         134MiB |
-|    0      3063      G   /usr/lib/xorg/Xorg                           631MiB |
-|    0      3217      G   /usr/bin/gnome-shell                         217MiB |
-|    0      3781      G   ...AAAAAAAAAAAAAAgAAAAAAAAA --shared-files    60MiB |
-|    0      6087      G   ...quest-channel-token=5527385337362823581   206MiB |
-+-----------------------------------------------------------------------------+
 ```
 
 ---
 ## Installing Docker CE
+
 Follow the instruction from [Get Docker CE for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/).
 
 I decided to install the debian package manually (Docker v18.06.0 for bionic). I got an error message that a dependency was missing and had to install ```libltdl7``` previously.
-<br>
-Edit: Recently, I updated Docker to version 19.03.2.
+\
+Edit: Recently, I updated Docker to version 23.0.1, build a5ee5b1.
 
-Additionally I added my user to the docker user group as decribed here:<br>
+Additionally I added my user to the docker user group as decribed here:\
 [Manage Docker as a non-root user](https://docs.docker.com/install/linux/linux-postinstall/)
 
 After rebooting try to run the ```hello-world``` docker container. If it runs everything is working.
 
-Ensure that docker will start on boot. 
-```bash
-$ service --status-all
-$ systemctl is-enabled docker
-$ systemctl enable docker
+Ensure that docker runs as system-wide service and will start on boot.
+
+```shell
+service --status-all
+systemctl is-enabled docker
+systemctl enable docker
 ```
 
 ---
+
 ## Installing the NVIDIA Container Toolkit
-The previous nvidia-docker2 is now deprecated. Therefore I have to deinstall the previous isntalled verion.
+
+The previous nvidia-docker2 is now deprecated. Therefore I have to uninstall the previous installed version.
+
 ```bash
-$ sudo apt-get purge -y nvidia-docker
+sudo apt-get purge -y nvidia-docker
 ```
+
 Afterwards follow the instruction from [nvidia-docker on GitHub](https://github.com/NVIDIA/nvidia-docker).
 
-```bash
-# Add the package repositories
-$ distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-$ curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-$ curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+```shell
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
 
-$ sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
-$ sudo systemctl restart docker
-``` 
-The following command did run successfully.
-```bash
-#### Test nvidia-smi with the latest official CUDA image
-$ docker run --gpus all nvidia/cuda:latest nvidia-smi
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
 ```
-It did work and I got the following output.
-```bash
-Mon Apr  6 09:13:52 2020       
+
+Afterwards try out running an `nvidia/cuda` container and executing the command `nvidia-smi` in the container as done with the command `docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi`. It will make all the installed gpus available within the container.
+
+```shell
+$ docker run --rm --gpus all nvidia/cuda:12.0.1-base-ubuntu22.04 nvidia-smi
+Sat Mar  4 14:18:15 2023       
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 440.64       Driver Version: 440.64       CUDA Version: 10.2     |
+| NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
 |===============================+======================+======================|
-|   0  TITAN RTX           Off  | 00000000:65:00.0  On |                  N/A |
-| 41%   33C    P8    23W / 280W |    709MiB / 24219MiB |     13%      Default |
+|   0  NVIDIA TITAN RTX    On   | 00000000:65:00.0  On |                  N/A |
+| 41%   37C    P0    56W / 280W |   1537MiB / 24576MiB |      8%      Default |
+|                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
-                                                                               
-+-----------------------------------------------------------------------------+
-| Processes:                                                       GPU Memory |
-|  GPU       PID   Type   Process name                             Usage      |
-|=============================================================================|
-+-----------------------------------------------------------------------------+
 ```
+
+ℹ️ If you like specific GPUs being available in the container you can either specify them by their index or GPU-UUID. The indices as well as the UUIDs can get retrieved using `nvidia-smi --list-gpus`.
+
+```shell
+$ nvidia-smi --list-gpus
+GPU 0: NVIDIA TITAN RTX (UUID: GPU-<UUID removed here>)
+```
+
+---
+
+## Installing the `docker compose` plugin
+Using `docker-compose.yml` files for building the Docker images and running the containers makes life much easier. It is mainly used for multi-container applications, but I find it also very useful for running single containers, see [Docker Compose overview](https://docs.docker.com/compose/).
+
+For using the `docker-compose.yml` files you have to install the `docker compose` plugin. Follow the instructions from [Installation of the Compose plugin](https://docs.docker.com/compose/install/linux/) for Ubuntu as shown below.
+
+```shell
+sudo apt-get update
+sudo apt-get install docker-compose-plugin
+```
+
+After the installation check `docker compose version`. You should get an output similar to the one below.
+
+```shell
+$ docker compose version
+Docker Compose version v2.16.0
+```
+
+Please checkout on how to use the `docker compose` following the examples mentiond in the main [README.md - Docker Compose examples with GPU support](README.md#docker-compose-examples-with-gpu-support) section.

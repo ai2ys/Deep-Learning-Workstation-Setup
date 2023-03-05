@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  pytorch:
+    container_name: pytorch
+    # specify image and tag, if variable is set in '.env' file as it will be used multiple times
+    image: ai2ys/deep-learning-workstation-setup/examples/pytorch:${NVCR_TAG}
+    #command: ${CMD:-nvidia-smi && bash}
+    entrypoint: /bin/bash
+    command: ["-c", "nvidia-smi && ${CMD:-${CMD_NB}}"]
+    tty: true
+    expose:
+      - ${PORT_NB}
+    ports:
+      - ${PORT_NB}:${PORT_NB}
+    build:
+      # docker file name
+      dockerfile: dockerfile
+      # directory where the docker file is located
+      context: .
+      args:
+        # if empty the value will be taken from the environment, here '.env' file
+        NVCR_TAG:
+        WORKSPACE_DIR:
+    working_dir: ${WORKSPACE_DIR}
+    volumes:
+      - ./src:${WORKSPACE_DIR}
+    # this section is required for the GPU support
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            # specify a single or mutliple GPU indices or UUIDs here
+            device_ids: ['${GPU_ID}']
+            capabilities: [gpu]

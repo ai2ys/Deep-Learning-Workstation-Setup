@@ -1,0 +1,31 @@
+{
+    "workbench.colorCustomizations": {
+        "[Default High Contrast]": {}
+    },
+
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": "active",
+    "editor.guides.indentation": true,
+
+    "indentRainbow.colorOnWhiteSpaceOnly": false,
+    "indentRainbow.indicatorStyle": "classic",
+    "indentRainbow.lightIndicatorStyleLineWidth": 2,
+    "indentRainbow.colors": [
+        // pride colors
+        "#E4030380",
+        "#FF8C0080",
+        "#FFED0080",
+        "#00802680",
+        "#24408E80",
+        "#73298280",
+        
+        // "rgba(255,255,64,0.5)",
+        // "rgba(127,255,127,0.5)",
+        // "rgba(255,127,255,0.5)",
+        // "rgba(79,236,236,0.5)"
+    ],
+    // "indentRainbow.indentSetter": {
+
+    // },
+}
