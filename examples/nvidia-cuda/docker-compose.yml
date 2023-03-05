@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  nvidia-cuda:
+    container_name: nvidia-cuda
+    # specify image and tag
+    image: nvidia/cuda:12.0.1-base-ubuntu22.04
+    entrypoint: /bin/bash
+    command: ["-c", "nvidia-smi && bash"]
+    tty: true
+    # this section is required for the GPU support
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            # specify a single or mutliple GPU indices or UUIDs here
+            device_ids: ['${GPU_ID}']
+            capabilities: [gpu]
