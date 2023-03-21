@@ -55,8 +55,8 @@ The folder [./examples](./examples/) contains multiple examples for running Dock
     \
     After having tried out the example mentioned in 1.) try out this one which customized an image based on `nvcr.io/nvidia/pytorch` and `nvcr.io/nvidia/tensorflow` images.
 
-    1. __PyTorch__ [examples/pytorch/README.md](examples/pytorch/README)
-    1. __TensorFlow__ [examples/tensorflow/README.md](examples/pytorch/README)
+    1. __PyTorch__ [examples/pytorch/README.md](examples/pytorch/README.md)
+    1. __TensorFlow__ [examples/tensorflow/README.md](examples/tensorflow/README.md)
 
 ℹ️ I personally prefer using `docker-compose.yml` files as they offer a clean way to build images and start containers without the need of long and tedious commands on the cli or the need for hard to maintain bash scripts.
 
