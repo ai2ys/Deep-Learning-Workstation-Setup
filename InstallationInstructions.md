@@ -155,6 +155,10 @@ Deinstallation of previously installed version.
     ```shell
     whereis nvidia
     ```
+    or
+    ```shell
+    modinfo nvidia | grep ^version
+    ```
 
 - Deinstall/remove all version related packages, replace the retrieved version below, e.g. 470
 
@@ -209,6 +213,37 @@ Sat Mar  4 12:56:05 2023
 | 41%   40C    P0    56W / 280W |   1416MiB / 24576MiB |      3%      Default |
 |                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
+```
+
+### Update NVIDIA driver installed via pps repository
+
+As already mentioned above, check which major driver version is compatible with your NVIDIA GPU. [Retrieve compatible version](https://www.nvidia.de/Download/index.aspx)
+
+```shell
+# retrieve installed NVIDIA driver version using
+dpkg -l | grep nvidia
+# or
+whereis nvidia
+# or
+modinfo nvidia | grep ^version
+
+# replace the retrieved version below
+current_version=<version>
+# define version that should get installed
+new_version=<new_version>
+# check availability of driver version
+apt-cache search nvidia-driver | grep ${new_version}
+# deinstall/remove all version related packages
+sudo apt-get purge *nvidia*${current_version}
+sudo apt-get autoremove
+sudo apt-get clean
+# install version new version
+sudo apt-get install nvidia-driver-${new_version}
+# reboot
+sudo reboot now
+
+# after reboot check
+nvidia-smi
 ```
 
 ---
