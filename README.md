@@ -25,7 +25,7 @@ Everything else will be installed in the Docker container. Using containers you 
 
 The [InstallationInstructions.md](./InstallationInstructions.md) file provides information on:
 
-- [Installing Ubuntu Server](./Deep-Learning-Workstation-Setup.md#Installing-Ubuntu-Server-1804-LTS)
+- [Installing Ubuntu Server](./InstallationInstructions.md#Installing-Ubuntu-20-04-LTS)
 - [Enabling remote access via SSH](./InstallationInstructions.md#remote-access-from-windows-laptop)
 - [Installing the NVIDIA driver and prior blacklisting of the Nouveau driver](./InstallationInstructions.md#installation-of-the-nvidia-gpu-driver)
 - [Installing Docker CE](InstallationInstructions.md#installing-docker-ce)

@@ -16,6 +16,55 @@ Steps accomplished
     sudo apt-get upgrade
     ```
 
+## Upgrading Ubuntu
+
+Upgrade will only be possible from the current version to the next version, e.g. from 20.04 LTS to 22.04 LTS.
+
+Following instructions from 
+<https://www.digitalocean.com/community/tutorials/how-to-upgrade-to-ubuntu-22-04-jammy-jellyfish>.
+
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+sudo reboot now
+
+sudo apt-get dist-upgrade
+sudo reboot now
+
+sudo do-release-upgrade
+# reboot will be done automatically within the upgrade process
+```
+
+Aftewards check the current version using `lsb_release -a`.
+
+```bash
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.5 LTS
+Release:        22.04
+Codename:       jammy 
+```
+
+Additionally checking if NVIDIA driver is still installed and working properly using `nvidia-smi`.
+
+```bash
+$ nvidia-smi
+Mon Dec  9 11:15:48 2024       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.127.08             Driver Version: 550.127.08     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA TITAN RTX               Off |   00000000:65:00.0 Off |                  N/A |
+| 41%   30C    P8              4W /  280W |      16MiB /  24576MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+```
+
 ---
 ## Static network configuration for remote access
 
