@@ -4,11 +4,14 @@ The system is setup using Linux ([Ubuntu 20.04 LTS](http://releases.ubuntu.com/2
 
 ---
 
-## Installing Ubuntu 20.04 LTS
+## Installing Ubuntu 
 
-Steps accomplished
+In this example Ubuntu 20.04 LTS will be installed.
 
-- Preparation of a bootable USB stick with [Ubuntu Server 20.04 LTS](http://releases.ubuntu.com/20.04/)
+Steps accomplished:
+
+- Preparation of a bootable USB stick with Ubuntu
+  - here: [Ubuntu Server 20.04 LTS](http://releases.ubuntu.com/20.04/)
 - Installaltion of Ubuntu Desktop (minimal)
 - Updating the system is up to date
     ```markdown
@@ -16,7 +19,7 @@ Steps accomplished
     sudo apt-get upgrade
     ```
 
-## Upgrading Ubuntu
+## Upgrading Ubuntu Version
 
 Upgrade will only be possible from the current version to the next version, e.g. from 20.04 LTS to 22.04 LTS.
 

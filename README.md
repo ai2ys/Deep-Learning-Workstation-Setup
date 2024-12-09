@@ -10,7 +10,7 @@ I am sharing my experiences setting up my Deep Learning Workstation. The main re
 
 Advantages of using Docker for a Deep Learning Workstation are that you will only need to install the following on your host system.
 
-- Linux OS (Ubuntu 20.04)
+- Linux OS (here: Ubuntu)
 - Docker CE
 - NVIDIA Driver
 
